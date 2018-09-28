@@ -1,0 +1,130 @@
+package dk.magenta.datafordeler.ger.configuration;
+
+import dk.magenta.datafordeler.core.configuration.Configuration;
+import dk.magenta.datafordeler.ger.GerPlugin;
+import dk.magenta.datafordeler.ger.data.company.CompanyEntity;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="ger_config")
+public class GerConfiguration implements Configuration {
+
+    public enum RegisterType {
+        DISABLED(0),
+        LOCAL_FILE(1);
+
+        private int value;
+        RegisterType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return this.value;
+        }
+    }
+
+    @Id
+    @Column(name = "id")
+    private final String plugin = GerPlugin.class.getName();
+
+
+    @Column
+    private String pullCronSchedule = null;
+
+    public String getPullCronSchedule() {
+        return this.pullCronSchedule;
+    }
+
+
+
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    private RegisterType companyRegisterType = RegisterType.LOCAL_FILE;
+
+    public RegisterType getCompanyRegisterType() {
+        return this.companyRegisterType;
+    }
+/*
+    @Column(length = 64)
+    private String companySheetName = "JE";
+
+    public String getCompanySheetName() {
+        return this.companySheetName;
+    }
+*/
+
+    @Column(length = 1024)
+    private String companyRegisterURL = "";
+
+    public String getCompanyRegisterURL() {
+        return this.companyRegisterURL;
+    }
+
+
+
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    private RegisterType unitRegisterType = RegisterType.LOCAL_FILE;
+
+    public RegisterType getUnitRegisterType() {
+        return this.unitRegisterType;
+    }
+/*
+    @Column(length = 64)
+    private String unitSheetName = "PE";
+
+    public String getUnitSheetName() {
+        return this.unitSheetName;
+    }
+*/
+
+    @Column(length = 1024)
+    private String unitRegisterURL = "";
+
+    public String getUnitRegisterURL() {
+        return this.unitRegisterURL;
+    }
+
+
+
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    private RegisterType responsibleRegisterType = RegisterType.LOCAL_FILE;
+
+    public RegisterType getResponsibleRegisterType() {
+        return this.responsibleRegisterType;
+    }
+/*
+    @Column(length = 64)
+    private String responsibleSheetName = "";
+
+    public String getResponsibleSheetName() {
+        return this.responsibleSheetName;
+    }
+*/
+    @Column(length = 1024)
+    private String responsibleRegisterURL = "";
+
+    public String getResponsibleRegisterURL() {
+        return this.responsibleRegisterURL;
+    }
+
+
+
+    public RegisterType getRegisterType(String schema) {
+        switch (schema) {
+            case CompanyEntity.schema:
+                return this.companyRegisterType;
+        }
+        return null;
+    }
+
+    public String getURL(String schema) {
+        switch (schema) {
+            case CompanyEntity.schema:
+                return this.companyRegisterURL;
+        }
+        return null;
+    }
+}
