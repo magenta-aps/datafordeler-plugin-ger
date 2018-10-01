@@ -203,7 +203,11 @@ public abstract class GerEntityManager<E extends GerEntity> extends EntityManage
         String sheetName = this.getSheetName();
         List<RawData> sheet = sheets.get(sheetName);
 
+        int row = 1;
         for (RawData rawData : sheet) {
+            row++;
+            System.out.println(row);
+
             timer.start(TASK_PARSE);
             timer.measure(TASK_PARSE);
 

@@ -1,6 +1,7 @@
 package dk.magenta.datafordeler.ger.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dk.magenta.datafordeler.core.database.DatabaseEntry;
 import dk.magenta.datafordeler.core.database.Identification;
 import dk.magenta.datafordeler.core.database.IdentifiedEntity;
 import org.hibernate.Session;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @MappedSuperclass
-public class GerEntity implements IdentifiedEntity {
+public class GerEntity extends DatabaseEntry implements IdentifiedEntity {
 
     public static final String DB_FIELD_IDENTIFICATION = "identification";
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})

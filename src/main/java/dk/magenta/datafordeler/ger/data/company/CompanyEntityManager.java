@@ -32,6 +32,11 @@ public class CompanyEntityManager extends GerEntityManager<CompanyEntity> {
     }
 
     @Override
+    protected String getSheetName() {
+        return "JE";
+    }
+
+    @Override
     public String getSchema() {
         return CompanyEntity.schema;
     }
@@ -53,6 +58,7 @@ public class CompanyEntityManager extends GerEntityManager<CompanyEntity> {
 
     @Override
     protected void updateEntity(CompanyEntity entity, RawData rawData, ImportMetadata importMetadata) {
+        System.out.println(rawData);
         entity.setValidated(rawData.getBoolean("VALIDERET"));
         entity.setName(rawData.getString("NAVN"));
         entity.setDanishName(rawData.getString("NAVN_DK"));
@@ -62,10 +68,10 @@ public class CompanyEntityManager extends GerEntityManager<CompanyEntity> {
         entity.setAddress1(rawData.getString("ADR1"));
         entity.setAddress2(rawData.getString("ADR2"));
         entity.setAddress3(rawData.getString("ADR3"));
-        entity.setBnr(rawData.getInt("BNR"));
-        entity.setBoxNr(rawData.getInt("BOXNR"));
+        entity.setBnr(rawData.getString("BNR"));
+        entity.setBoxNr(rawData.getString("BOXNR"));
         entity.setPostNr(rawData.getInt("POSTNR"));
-        entity.setOldTaxKom(rawData.getInt("GAMMELSTATKOM"));
+        entity.setOldTaxKom(rawData.getInt("GAMMELSKATKOM"));
         entity.setMunicipalityCode(rawData.getInt("CPR_KOMKODE_2018"));
         entity.setLocalityCode(rawData.getInt("STEDKODE"));
         entity.setCountryCode(rawData.getInt("LANDKODE"));

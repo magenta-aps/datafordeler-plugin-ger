@@ -170,15 +170,15 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
 
     public static final String DB_FIELD_BNR = "bnr";
     public static final String IO_FIELD_BNR = "bnr";
-    @Column(name = DB_FIELD_BNR)
+    @Column(name = DB_FIELD_BNR, length = 6)
     @JsonProperty(value = IO_FIELD_BNR)
-    private Integer bnr;
+    private String bnr;
 
-    public Integer getBnr() {
+    public String getBnr() {
         return this.bnr;
     }
 
-    public void setBnr(Integer bnr) {
+    public void setBnr(String bnr) {
         this.bnr = bnr;
     }
 
@@ -186,13 +186,13 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
     public static final String IO_FIELD_BOXNR = "boxNr";
     @Column(name = DB_FIELD_BOXNR)
     @JsonProperty(value = IO_FIELD_BOXNR)
-    private Integer boxNr;
+    private String boxNr;
 
-    public Integer getBoxNr() {
+    public String getBoxNr() {
         return this.boxNr;
     }
 
-    public void setBoxNr(Integer boxNr) {
+    public void setBoxNr(String boxNr) {
         this.boxNr = boxNr;
     }
 
@@ -214,13 +214,13 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
     public static final String IO_FIELD_OLD_TAX = "gammelSkatKom";
     @Column(name = DB_FIELD_OLD_TAX)
     @JsonProperty(value = IO_FIELD_OLD_TAX)
-    private int oldTaxKom;
+    private Integer oldTaxKom;
 
-    public int getOldTaxKom() {
+    public Integer getOldTaxKom() {
         return this.oldTaxKom;
     }
 
-    public void setOldTaxKom(int oldTaxKom) {
+    public void setOldTaxKom(Integer oldTaxKom) {
         this.oldTaxKom = oldTaxKom;
     }
 
@@ -228,13 +228,13 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
     public static final String IO_FIELD_MUNICIPALITY_CODE = "kommuneKode";
     @Column(name = DB_FIELD_MUNICIPALITY_CODE)
     @JsonProperty(value = IO_FIELD_MUNICIPALITY_CODE)
-    private int municipalityCode;
+    private Integer municipalityCode;
 
-    public int getMunicipalityCode() {
+    public Integer getMunicipalityCode() {
         return this.municipalityCode;
     }
 
-    public void setMunicipalityCode(int municipalityCode) {
+    public void setMunicipalityCode(Integer municipalityCode) {
         this.municipalityCode = municipalityCode;
     }
 
@@ -242,13 +242,13 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
     public static final String IO_FIELD_LOCALITY_CODE = "stedKode";
     @Column(name = DB_FIELD_LOCALITY_CODE)
     @JsonProperty(value = IO_FIELD_LOCALITY_CODE)
-    private int localityCode;
+    private Integer localityCode;
 
-    public int getLocalityCode() {
+    public Integer getLocalityCode() {
         return this.localityCode;
     }
 
-    public void setLocalityCode(int localityCode) {
+    public void setLocalityCode(Integer localityCode) {
         this.localityCode = localityCode;
     }
 
@@ -256,13 +256,13 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
     public static final String IO_FIELD_COUNTRY_CODE = "landeKode";
     @Column(name = DB_FIELD_COUNTRY_CODE)
     @JsonProperty(value = IO_FIELD_COUNTRY_CODE)
-    private int countryCode;
+    private Integer countryCode;
 
-    public int getCountryCode() {
+    public Integer getCountryCode() {
         return this.countryCode;
     }
 
-    public void setCountryCode(int countryCode) {
+    public void setCountryCode(Integer countryCode) {
         this.countryCode = countryCode;
     }
 
@@ -326,13 +326,13 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
     public static final String IO_FIELD_OPERATION_FORM_CODE = "driftsformKode";
     @Column(name = DB_FIELD_OPERATION_FORM_CODE)
     @JsonProperty(value = IO_FIELD_OPERATION_FORM_CODE)
-    private int operationFormCode;
+    private Integer operationFormCode;
 
-    public int getOperationFormCode() {
+    public Integer getOperationFormCode() {
         return this.operationFormCode;
     }
 
-    public void setOperationFormCode(int operationFormCode) {
+    public void setOperationFormCode(Integer operationFormCode) {
         this.operationFormCode = operationFormCode;
     }
 
@@ -354,13 +354,13 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
     public static final String IO_FIELD_BUSINESS_CODE = "brancheKode";
     @Column(name = DB_FIELD_BUSINESS_CODE)
     @JsonProperty(value = IO_FIELD_BUSINESS_CODE)
-    private int businessCode;
+    private Integer businessCode;
 
-    public int getBusinessCode() {
+    public Integer getBusinessCode() {
         return this.businessCode;
     }
 
-    public void setBusinessCode(int businessCode) {
+    public void setBusinessCode(Integer businessCode) {
         this.businessCode = businessCode;
     }
 
@@ -422,7 +422,7 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
 
     public static final String DB_FIELD_MEMO = "memo";
     public static final String IO_FIELD_MEMO = "notat";
-    @Column(name = DB_FIELD_MEMO)
+    @Column(name = DB_FIELD_MEMO, length = 5000)
     @JsonProperty(value = IO_FIELD_MEMO)
     private String memo;
 
