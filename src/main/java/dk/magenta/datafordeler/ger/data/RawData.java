@@ -1,5 +1,6 @@
 package dk.magenta.datafordeler.ger.data;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -9,6 +10,10 @@ import java.util.UUID;
 public class RawData extends HashMap<String, Object> {
 
     public String getString(String key) {
+        return this.getString(key, false);
+    }
+
+    public String getString(String key, boolean dateAsInt) {
         Object value = this.get(key);
         if (value instanceof Long) {
             return ((Long) value).toString();
@@ -17,7 +22,12 @@ public class RawData extends HashMap<String, Object> {
             return ((Integer) value).toString();
         }
         if (value instanceof Date) {
-            return ((Date) value).toString();
+            Date date = (Date) value;
+            if (dateAsInt) {
+                return Integer.toString(this.dateAsInt(date));
+            } else {
+                return date.toString();
+            }
         }
         return (String) value;
     }
@@ -31,6 +41,8 @@ public class RawData extends HashMap<String, Object> {
         if (value != null) {
             if (value instanceof Long) {
                 return ((Long) value).intValue();
+            } else if (value instanceof Date) {
+                return this.dateAsInt((Date) value);
             }
             return (Integer) value;
         }
@@ -63,5 +75,17 @@ public class RawData extends HashMap<String, Object> {
             }
         }
         return null;
+    }
+
+    private int dateAsInt(Date date) {
+        // Excel stores dates as numbers, but storing an actual number may (with the wrong cell formatting) get extracted as a date.
+        // Work out which number the extracted date represents
+        return Long.valueOf(
+                LocalDate.of(
+                        date.getYear() + 1900,
+                        date.getMonth() + 1,
+                        date.getDate()
+                ).toEpochDay() + 25569
+        ).intValue();
     }
 }

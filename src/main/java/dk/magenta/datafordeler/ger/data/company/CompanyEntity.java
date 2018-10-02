@@ -170,7 +170,7 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
 
     public static final String DB_FIELD_BNR = "bnr";
     public static final String IO_FIELD_BNR = "bnr";
-    @Column(name = DB_FIELD_BNR, length = 6)
+    @Column(name = DB_FIELD_BNR, length = 12)
     @JsonProperty(value = IO_FIELD_BNR)
     private String bnr;
 
@@ -180,6 +180,10 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
 
     public void setBnr(String bnr) {
         this.bnr = bnr;
+    }
+
+    public void setBnr(Integer bnr) {
+        this.setBnr(bnr == null ? null : bnr.toString());
     }
 
     public static final String DB_FIELD_BOXNR = "boxNr";

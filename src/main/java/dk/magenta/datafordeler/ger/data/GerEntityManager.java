@@ -206,7 +206,7 @@ public abstract class GerEntityManager<E extends GerEntity> extends EntityManage
         int row = 1;
         for (RawData rawData : sheet) {
             row++;
-            System.out.println(row);
+            System.out.println("row "+row);
 
             timer.start(TASK_PARSE);
             timer.measure(TASK_PARSE);
