@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component("GeoAccessAddressEntityManager")
+@Component("GerCompanyEntityManager")
 public class CompanyEntityManager extends GerEntityManager<CompanyEntity> {
 
     public CompanyEntityManager() {
@@ -18,7 +18,7 @@ public class CompanyEntityManager extends GerEntityManager<CompanyEntity> {
 
     @Override
     protected String getBaseName() {
-        return "accessaddress";
+        return "company";
     }
 
     @Override
