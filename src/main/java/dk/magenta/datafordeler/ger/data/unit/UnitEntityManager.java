@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component("GeoAccessAddressEntityManager")
+@Component("GerAccessAddressEntityManager")
 public class UnitEntityManager extends GerEntityManager<UnitEntity> {
 
     public UnitEntityManager() {

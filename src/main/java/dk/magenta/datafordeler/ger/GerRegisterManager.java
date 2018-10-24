@@ -46,12 +46,12 @@ public class GerRegisterManager extends RegisterManager {
     @Autowired
     private SessionManager sessionManager;
 
-    private Logger log = LogManager.getLogger("dk.magenta.datafordeler.geo.GeoRegisterManager");
+    private Logger log = LogManager.getLogger("dk.magenta.datafordeler.ger.GerRegisterManager");
 
-    @Value("${dafo.geo.proxy-url:}")
+    @Value("${dafo.ger.proxy-url:}")
     private String proxyString;
 
-    @Value("${dafo.geo.local-copy-folder:}")
+    @Value("${dafo.ger.local-copy-folder:}")
     private String localCopyFolder;
 
     public GerRegisterManager() {
@@ -59,7 +59,7 @@ public class GerRegisterManager extends RegisterManager {
     }
 
     /**
-    * RegisterManager initialization; set up dk.magenta.datafordeler.geo.dk.magenta.datafordeler.ger.configuration and source fetcher.
+    * RegisterManager initialization; set up dk.magenta.datafordeler.ger.dk.magenta.datafordeler.ger.configuration and source fetcher.
     * We store fetched dk.magenta.datafordeler.ger.data in a local cache, so create a random folder for that.
     */
     @PostConstruct

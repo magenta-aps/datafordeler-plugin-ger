@@ -55,7 +55,7 @@ public abstract class GerQuery<E extends GerEntity> extends BaseQuery {
         }
         /*if (this.uuid != null && !this.uuid.isEmpty()) {
             lookupDefinition.put(
-                    BaseLookupDefinition.entityref + BaseLookupDefinition.separator + GeoEntity.DB_FIELD_IDENTIFICATION + BaseLookupDefinition.separator + Identification.DB_FIELD_UUID,
+                    BaseLookupDefinition.entityref + BaseLookupDefinition.separator + GerEntity.DB_FIELD_IDENTIFICATION + BaseLookupDefinition.separator + Identification.DB_FIELD_UUID,
                     this.uuid,
                     UUID.class,
                     BaseLookupDefinition.Operator.EQ

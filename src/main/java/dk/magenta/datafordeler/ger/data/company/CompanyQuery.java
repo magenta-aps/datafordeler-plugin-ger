@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by lars on 19-05-17.
- */
 public class CompanyQuery extends GerQuery<CompanyEntity> {
 
     public static final String NAME = CompanyEntity.IO_FIELD_NAME;

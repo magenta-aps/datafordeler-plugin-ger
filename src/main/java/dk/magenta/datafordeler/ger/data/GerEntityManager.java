@@ -41,7 +41,7 @@ public abstract class GerEntityManager<E extends GerEntity> extends EntityManage
     private ObjectMapper objectMapper;
 
     @Autowired
-    GerConfigurationManager geoConfigurationManager;
+    GerConfigurationManager gerConfigurationManager;
 
     @Autowired
     Stopwatch timer;
@@ -150,7 +150,7 @@ public abstract class GerEntityManager<E extends GerEntity> extends EntityManage
     }
 
     protected GerConfiguration getConfiguration() {
-        return this.geoConfigurationManager.getConfiguration();
+        return this.gerConfigurationManager.getConfiguration();
     }
 
     public GerRegisterManager getRegisterManager() {
@@ -159,12 +159,12 @@ public abstract class GerEntityManager<E extends GerEntity> extends EntityManage
 
     protected abstract String getSheetName();
 
-    private static final String TASK_PARSE = "GeoParse";
-    private static final String TASK_FIND_ENTITY = "GeoFindEntity";
-    private static final String TASK_POPULATE_DATA = "GeoPopulateData";
-    private static final String TASK_SAVE = "GeoSave";
-    private static final String TASK_COMMIT = "GeoCommit";
-    private static final String TASK_CHUNK_HANDLE = "GeoChunk";
+    private static final String TASK_PARSE = "GerParse";
+    private static final String TASK_FIND_ENTITY = "GerFindEntity";
+    private static final String TASK_POPULATE_DATA = "GerPopulateData";
+    private static final String TASK_SAVE = "GerSave";
+    private static final String TASK_COMMIT = "GerCommit";
+    private static final String TASK_CHUNK_HANDLE = "GerChunk";
 
 
     protected abstract Class<E> getEntityClass();
@@ -173,6 +173,8 @@ public abstract class GerEntityManager<E extends GerEntity> extends EntityManage
 
     @Override
     public List<? extends Registration> parseData(InputStream sheetData, ImportMetadata importMetadata) throws DataFordelerException {
+
+        System.out.println(this.getClass().getSimpleName()+"::parseData");
 
         String extension = "xlsx";
         if (sheetData instanceof ImportInputStream) {

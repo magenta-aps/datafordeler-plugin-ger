@@ -15,7 +15,7 @@ public class GerConfigurationManager extends ConfigurationManager<GerConfigurati
     @Autowired
     private ConfigurationSessionManager configurationSessionManager;
 
-    private Logger log = LogManager.getLogger("GeoConfigurationManager");
+    private Logger log = LogManager.getLogger("GerConfigurationManager");
 
     @PostConstruct
     public void init() {

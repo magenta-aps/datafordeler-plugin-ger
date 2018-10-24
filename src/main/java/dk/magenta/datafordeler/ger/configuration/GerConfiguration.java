@@ -3,6 +3,8 @@ package dk.magenta.datafordeler.ger.configuration;
 import dk.magenta.datafordeler.core.configuration.Configuration;
 import dk.magenta.datafordeler.ger.GerPlugin;
 import dk.magenta.datafordeler.ger.data.company.CompanyEntity;
+import dk.magenta.datafordeler.ger.data.responsible.ResponsibleEntity;
+import dk.magenta.datafordeler.ger.data.unit.UnitEntity;
 
 import javax.persistence.*;
 
@@ -116,6 +118,10 @@ public class GerConfiguration implements Configuration {
         switch (schema) {
             case CompanyEntity.schema:
                 return this.companyRegisterType;
+            case UnitEntity.schema:
+                return this.unitRegisterType;
+            case ResponsibleEntity.schema:
+                return this.responsibleRegisterType;
         }
         return null;
     }
@@ -124,6 +130,10 @@ public class GerConfiguration implements Configuration {
         switch (schema) {
             case CompanyEntity.schema:
                 return this.companyRegisterURL;
+            case UnitEntity.schema:
+                return this.unitRegisterURL;
+            case ResponsibleEntity.schema:
+                return this.responsibleRegisterURL;
         }
         return null;
     }

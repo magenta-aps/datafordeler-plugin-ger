@@ -7,13 +7,15 @@ import dk.magenta.datafordeler.core.plugin.RegisterManager;
 import dk.magenta.datafordeler.core.plugin.RolesDefinition;
 import dk.magenta.datafordeler.ger.configuration.GerConfigurationManager;
 import dk.magenta.datafordeler.ger.data.company.CompanyEntityManager;
+import dk.magenta.datafordeler.ger.data.responsible.ResponsibleEntityManager;
+import dk.magenta.datafordeler.ger.data.unit.UnitEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 /**
- * Datafordeler Plugin to fetch, parse and serve Geo dk.magenta.datafordeler.ger.data (dk.magenta.datafordeler.ger.data on regions, localities, roads, addresses etc.)
+ * Datafordeler Plugin to fetch, parse and serve Ger dk.magenta.datafordeler.ger.data (dk.magenta.datafordeler.ger.data on regions, localities, roads, addresses etc.)
  * As with all plugins, it follows the model laid out in the Datafordeler Core
  * project, so it takes care of where to fetch dk.magenta.datafordeler.ger.data, how to parse it, how to
  * store it (leveraging the Datafordeler bitemporality model), under what path 
@@ -26,8 +28,6 @@ public class GerPlugin extends Plugin {
 
     public static final String DEBUG_TABLE_PREFIX = "";
 
-    public static final int SRID = 4326;
-
     @Autowired
     private GerConfigurationManager configurationManager;
 
@@ -37,6 +37,12 @@ public class GerPlugin extends Plugin {
 
     @Autowired
     private CompanyEntityManager companyEntityManager;
+
+    @Autowired
+    private UnitEntityManager unitEntityManager;
+
+    @Autowired
+    private ResponsibleEntityManager responsibleEntityManager;
 
     private GerRolesDefinition rolesDefinition = new GerRolesDefinition();
 
@@ -52,6 +58,8 @@ public class GerPlugin extends Plugin {
     @PostConstruct
     public void init() {
         this.registerManager.addEntityManager(this.companyEntityManager);
+        this.registerManager.addEntityManager(this.unitEntityManager);
+        this.registerManager.addEntityManager(this.responsibleEntityManager);
     }
 
     /**
@@ -76,7 +84,7 @@ public class GerPlugin extends Plugin {
     }
 
     /**
-     * Return the plugin’s dk.magenta.datafordeler.geo.dk.magenta.datafordeler.ger.configuration manager
+     * Return the plugin’s dk.magenta.datafordeler.ger.dk.magenta.datafordeler.ger.configuration manager
      */
     @Override
     public ConfigurationManager getConfigurationManager() {

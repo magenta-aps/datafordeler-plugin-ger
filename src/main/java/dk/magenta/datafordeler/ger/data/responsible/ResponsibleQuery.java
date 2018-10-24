@@ -1,4 +1,4 @@
-package dk.magenta.datafordeler.ger.data.unit;
+package dk.magenta.datafordeler.ger.data.responsible;
 
 import dk.magenta.datafordeler.core.database.BaseLookupDefinition;
 import dk.magenta.datafordeler.core.exception.InvalidClientInputException;
@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UnitQuery extends GerQuery<UnitEntity> {
+public class ResponsibleQuery extends GerQuery<ResponsibleEntity> {
 
-    public static final String NAME = UnitEntity.IO_FIELD_NAME;
+    public static final String NAME = ResponsibleEntity.IO_FIELD_NAME;
 
     @QueryField(type = QueryField.FieldType.STRING, queryName = NAME)
     private List<String> name = new ArrayList<>();
@@ -45,7 +45,7 @@ public class UnitQuery extends GerQuery<UnitEntity> {
     public BaseLookupDefinition getLookupDefinition() {
         BaseLookupDefinition lookupDefinition = super.getLookupDefinition();
         if (this.name != null && !this.name.isEmpty()) {
-            lookupDefinition.put(UnitEntity.DB_FIELD_NAME + BaseLookupDefinition.separator + UnitEntity.DB_FIELD_NAME, this.name, String.class);
+            lookupDefinition.put(ResponsibleEntity.DB_FIELD_NAME + BaseLookupDefinition.separator + ResponsibleEntity.DB_FIELD_NAME, this.name, String.class);
         }
         return lookupDefinition;
     }
