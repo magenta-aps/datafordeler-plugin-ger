@@ -1,10 +1,9 @@
-package dk.magenta.datafordeler.ger.data.parser;
+package dk.magenta.datafordeler.ger.parser;
 
 import dk.magenta.datafordeler.ger.data.RawData;
 import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;

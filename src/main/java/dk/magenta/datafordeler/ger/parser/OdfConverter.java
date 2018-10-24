@@ -1,4 +1,4 @@
-package dk.magenta.datafordeler.ger.data.parser;
+package dk.magenta.datafordeler.ger.parser;
 
 import dk.magenta.datafordeler.ger.data.RawData;
 import org.apache.log4j.Logger;

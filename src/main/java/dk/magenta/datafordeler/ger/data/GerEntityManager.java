@@ -20,7 +20,7 @@ import dk.magenta.datafordeler.core.util.Stopwatch;
 import dk.magenta.datafordeler.ger.GerRegisterManager;
 import dk.magenta.datafordeler.ger.configuration.GerConfiguration;
 import dk.magenta.datafordeler.ger.configuration.GerConfigurationManager;
-import dk.magenta.datafordeler.ger.data.parser.SpreadsheetConverter;
+import dk.magenta.datafordeler.ger.parser.SpreadsheetConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -206,7 +206,7 @@ public abstract class GerEntityManager<E extends GerEntity> extends EntityManage
         int row = 1;
         for (RawData rawData : sheet) {
             row++;
-            System.out.println("row "+row);
+            //System.out.println("row "+row);
 
             timer.start(TASK_PARSE);
             timer.measure(TASK_PARSE);

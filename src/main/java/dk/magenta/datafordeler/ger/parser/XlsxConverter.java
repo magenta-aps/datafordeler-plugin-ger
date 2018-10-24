@@ -1,12 +1,8 @@
-package dk.magenta.datafordeler.ger.data.parser;
+package dk.magenta.datafordeler.ger.parser;
 
 import dk.magenta.datafordeler.ger.data.RawData;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.*;
 
 import java.io.File;
 import java.io.InputStream;
@@ -18,43 +14,44 @@ import java.util.Map;
 /**
  * Created by lars on 26-11-15.
  */
-public class XlsConverter extends SpreadsheetConverter {
+public class XlsxConverter extends XlsConverter {
 
     protected String[] getApplicableContentTypes() {
         return new String[]{
-                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "application/wps-office.xlsx"
         };
     }
 
     protected String[] getApplicableFileExtensions() {
         return new String[]{
-                "xls"
+                "xlsx"
         };
     }
 
     public Map<String, List<RawData>> convert(InputStream data) throws Exception {
-        return this.convert(new HSSFWorkbook(data));
+        return this.convert(new XSSFWorkbook(data));
     }
     public Map<String, List<RawData>> convert(File data) throws Exception {
-        return this.convert((HSSFWorkbook) WorkbookFactory.create(data));
+        return this.convert((XSSFWorkbook) WorkbookFactory.create(data));
     }
 
-    private Map<String, List<RawData>> convert(HSSFWorkbook document) throws Exception {
+    private Map<String, List<RawData>> convert(XSSFWorkbook document) throws Exception {
         HashMap<String, List<RawData>> documentConversion = new HashMap<>();
         int sheetCount = document.getNumberOfSheets();
         for (int i = 0; i < sheetCount; i++) {
             ArrayList<RawData> sheetConversion = new ArrayList<>();
-            HSSFSheet sheet = document.getSheetAt(i);
+            XSSFSheet sheet = document.getSheetAt(i);
             String sheetName = sheet.getSheetName();
             int firstRowIndex = sheet.getFirstRowNum();
             int rowCount = sheet.getLastRowNum() + 1;
             ArrayList<String> columnNames = new ArrayList<>();
             for (Object value : getRow(sheet.getRow(firstRowIndex))) {
-                columnNames.add((String) value);
+                columnNames.add(value.toString());
             }
             for (int rowIndex = firstRowIndex + 1; rowIndex < rowCount; rowIndex++) {
                 RawData rowConversion = new RawData();
-                HSSFRow row = sheet.getRow(rowIndex);
+                XSSFRow row = sheet.getRow(rowIndex);
                 if (row != null) {
                     List<Object> values = getRow(row);
                     for (int cellIndex = 0; cellIndex < values.size(); cellIndex++) {
@@ -68,8 +65,7 @@ public class XlsConverter extends SpreadsheetConverter {
         return documentConversion;
     }
 
-
-    private static List<Object> getRow(HSSFRow row) {
+    private static List<Object> getRow(XSSFRow row) {
         ArrayList<Object> values = new ArrayList<>();
         int firstCell = row.getFirstCellNum();
         int lastCell = row.getLastCellNum();
@@ -79,26 +75,4 @@ public class XlsConverter extends SpreadsheetConverter {
         return values;
     }
 
-    protected static Object getCellValue(Cell cell) {
-        if (cell != null) {
-            int cellType = cell.getCellType();
-            if (cellType == Cell.CELL_TYPE_STRING) {
-                return cell.getStringCellValue();
-            } else if (cellType == Cell.CELL_TYPE_NUMERIC) {
-                if (DateUtil.isCellDateFormatted(cell)) {
-                    return DateUtil.getJavaDate(cell.getNumericCellValue());
-                } else {
-                    double value = cell.getNumericCellValue();
-                    if (value == Math.floor(value)) {
-                        return (long) value;
-                    } else {
-                        return value;
-                    }
-                }
-            } else if (cellType == Cell.CELL_TYPE_BOOLEAN) {
-                return cell.getBooleanCellValue();
-            }
-        }
-        return null;
-    }
 }
