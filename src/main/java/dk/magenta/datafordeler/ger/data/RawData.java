@@ -1,6 +1,5 @@
 package dk.magenta.datafordeler.ger.data;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -24,9 +23,10 @@ public class RawData extends HashMap<String, Object> {
         if (value instanceof Date) {
             Date date = (Date) value;
             if (dateAsInt) {
-                return Integer.toString(this.dateAsInt(date));
+                return Long.toString(dateAsLong(date));
             } else {
-                return date.toString();
+                LocalDate localDate = convertDate(date);
+                return localDate != null ? localDate.format(DateTimeFormatter.ISO_LOCAL_DATE) : null;
             }
         }
         return (String) value;
@@ -42,19 +42,34 @@ public class RawData extends HashMap<String, Object> {
             if (value instanceof Long) {
                 return ((Long) value).intValue();
             } else if (value instanceof Date) {
-                return this.dateAsInt((Date) value);
+                return Long.valueOf(dateAsLong((Date) value)).intValue();
             }
             return (Integer) value;
         }
         return null;
     }
 
-    public LocalDate getDate(String key) {
+    public Long getLong(String key) {
         Object value = this.get(key);
+        if (value != null) {
+            if (value instanceof Long) {
+                return (Long) value;
+            } else if (value instanceof Date) {
+                return dateAsLong((Date) value);
+            }
+        }
+        return null;
+    }
+
+    public LocalDate getDate(String key) {
+        return convertDate(this.get(key));
+    }
+
+    public static LocalDate convertDate(Object value) {
         if (value != null) {
             if (value instanceof Date) {
                 Date d = (Date) value;
-                return LocalDate.of(d.getYear(), d.getMonth() + 1, d.getDate());
+                return LocalDate.of(d.getYear() + 1900, d.getMonth() + 1, d.getDate());
             }
             return LocalDate.parse((String) value, DateTimeFormatter.ISO_LOCAL_DATE);
         }
@@ -77,15 +92,22 @@ public class RawData extends HashMap<String, Object> {
         return null;
     }
 
-    private int dateAsInt(Date date) {
+    public static long dateAsLong(Date date) {
         // Excel stores dates as numbers, but storing an actual number may (with the wrong cell formatting) get extracted as a date.
         // Work out which number the extracted date represents
-        return Long.valueOf(
+        return dateAsLong(
                 LocalDate.of(
                         date.getYear() + 1900,
                         date.getMonth() + 1,
                         date.getDate()
-                ).toEpochDay() + 25569
-        ).intValue();
+                )
+        );
+    }
+
+    public static long dateAsLong(LocalDate date) {
+        // Excel stores dates as numbers, but storing an actual number may (with the wrong cell formatting) get extracted as a date.
+        // Work out which number the extracted date represents
+        return Long.valueOf(date.toEpochDay() + 25569
+        );
     }
 }

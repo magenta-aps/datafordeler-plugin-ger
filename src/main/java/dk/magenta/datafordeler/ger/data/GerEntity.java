@@ -8,6 +8,8 @@ import org.hibernate.Session;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @MappedSuperclass
 public class GerEntity extends DatabaseEntry implements IdentifiedEntity {
@@ -34,19 +36,4 @@ public class GerEntity extends DatabaseEntry implements IdentifiedEntity {
         this.identification = identification;
     }
 
-
-    public static final String DB_FIELD_CODE = "ger";
-    public static final String IO_FIELD_CODE = "gerNr";
-    @Column(name = DB_FIELD_CODE)
-    @JsonProperty
-    private int ger;
-
-    public int getGer() {
-        return this.ger;
-    }
-
-    @JsonProperty(value = "ger")
-    public void setGer(int ger) {
-        this.ger = ger;
-    }
 }

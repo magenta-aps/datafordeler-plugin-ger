@@ -6,10 +6,7 @@ import dk.magenta.datafordeler.core.fapi.ParameterMap;
 import dk.magenta.datafordeler.core.fapi.QueryField;
 import dk.magenta.datafordeler.ger.data.GerQuery;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UnitQuery extends GerQuery<UnitEntity> {
 
@@ -34,6 +31,32 @@ public class UnitQuery extends GerQuery<UnitEntity> {
         }
     }
 
+    public static final String DEID = UnitEntity.IO_FIELD_DEID;
+
+    @QueryField(type = QueryField.FieldType.STRING, queryName = DEID)
+    private List<UUID> deid = new ArrayList<>();
+
+    public List<String> getDeid() {
+        return name;
+    }
+
+    public void setDeid(String deid) {
+        this.setDeid(UUID.fromString(deid));
+    }
+
+    public void setDeid(UUID deid) {
+        this.deid.clear();
+        this.addDeid(deid);
+    }
+
+    public void addDeid(UUID deid) {
+        if (deid != null) {
+            this.deid.add(deid);
+            this.increaseDataParamCount();
+        }
+    }
+
+
     @Override
     public Map<String, Object> getSearchParameters() {
         HashMap<String, Object> map = new HashMap<>(super.getSearchParameters());
@@ -45,7 +68,10 @@ public class UnitQuery extends GerQuery<UnitEntity> {
     public BaseLookupDefinition getLookupDefinition() {
         BaseLookupDefinition lookupDefinition = super.getLookupDefinition();
         if (this.name != null && !this.name.isEmpty()) {
-            lookupDefinition.put(UnitEntity.DB_FIELD_NAME + BaseLookupDefinition.separator + UnitEntity.DB_FIELD_NAME, this.name, String.class);
+            lookupDefinition.put(UnitEntity.DB_FIELD_NAME , this.name, String.class);
+        }
+        if (this.deid != null && !this.deid.isEmpty()) {
+            lookupDefinition.put(UnitEntity.DB_FIELD_DEID, this.deid, UUID.class);
         }
         return lookupDefinition;
     }

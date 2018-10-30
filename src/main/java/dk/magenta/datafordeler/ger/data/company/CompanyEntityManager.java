@@ -5,9 +5,9 @@ import dk.magenta.datafordeler.core.io.ImportMetadata;
 import dk.magenta.datafordeler.ger.data.GerEntityManager;
 import dk.magenta.datafordeler.ger.data.RawData;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 @Component("GerCompanyEntityManager")
@@ -101,4 +101,62 @@ public class CompanyEntityManager extends GerEntityManager<CompanyEntity> {
         entity.setRoadCode(rawData.getInt("VEJKODE"));
     }
 
+    private static final HashMap<String, String> keyMappingEntityToRaw = new HashMap<>();
+    private static final HashMap<String, String> keyMappingRawToEntity = new HashMap<>();
+    static {
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_GERNR, "GERNR");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_VALIDATED, "VALIDERET");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_NAME, "NAVN");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_DANISH_NAME, "NAVN_DK");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_SHORT_NAME, "KORTNAVN");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_SHORT_DANISH_NAME, "KORTNAVN_DK");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_CO_NAME, "CONAVN");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_ADDRESS1, "ADR1");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_ADDRESS2, "ADR2");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_ADDRESS3, "ADR3");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_BNR, "BNR");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_BOXNR, "BOXNR");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_POSTNR, "POSTNR");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_OLD_TAX, "GAMMELSKATKOM");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_MUNICIPALITY_CODE, "CPR_KOMKODE_2018");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_LOCALITY_CODE, "STEDKODE");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_COUNTRY_CODE, "LANDKODE");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_PHONE, "TLFNR");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_FAX, "FAXNR");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_MOBILEPHONE, "MOBILNR");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_EMAIL, "EMAIL");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_OPERATION_FORM_CODE, "DRIFTFORMKODE");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_OPERATION_FORM_TEXT, "DRIFTFORMTEKST");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_BUSINESS_CODE, "BRANCHEKODE");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_BUSINESS_TEXT, "BRANCHETEKST");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_START_DATE, "STARTDTO");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_END_DATE, "SLUTDTO");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_LNR, "LNR");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_MEMO, "NOTAT");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_FOUND_DATE, "OPRETDTO");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_AJOUR_DATE, "AJOURDTO");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_AJOUR_INIT, "AJOURINIT");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_STATUS_GUID, "JE_STATUS_GUID");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_STATUS_CHANGE, "JE_STATUS_CHANGE");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_STATUS_INIT, "JE_STATUS_INIT");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_DOOR, "SIDEDOER");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_FLOOR, "ETAGE");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_LETTER_FROM, "BOGSTAVFRA");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_LETTER_TO, "BOGSTAVTIL");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_HOUSENUMBER_FROM, "HUSNUMMERFRA");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_HOUSENUMBER_TO, "HUSNUMMERTIL");
+        keyMappingEntityToRaw.put(CompanyEntity.IO_FIELD_ROAD_CODE, "VEJKODE");
+
+        for (String key : keyMappingEntityToRaw.keySet()) {
+            keyMappingRawToEntity.put(keyMappingEntityToRaw.get(key), key);
+        }
+    }
+
+    public static HashMap<String, String> getKeyMappingEntityToRaw() {
+        return keyMappingEntityToRaw;
+    }
+
+    public static HashMap<String, String> getKeyMappingRawToEntity() {
+        return keyMappingRawToEntity;
+    }
 }

@@ -174,8 +174,6 @@ public abstract class GerEntityManager<E extends GerEntity> extends EntityManage
     @Override
     public List<? extends Registration> parseData(InputStream sheetData, ImportMetadata importMetadata) throws DataFordelerException {
 
-        System.out.println(this.getClass().getSimpleName()+"::parseData");
-
         String extension = "xlsx";
         if (sheetData instanceof ImportInputStream) {
             ImportInputStream importInputStream = (ImportInputStream) sheetData;

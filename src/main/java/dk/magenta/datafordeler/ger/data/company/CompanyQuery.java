@@ -1,11 +1,14 @@
 package dk.magenta.datafordeler.ger.data.company;
 
 import dk.magenta.datafordeler.core.database.BaseLookupDefinition;
+import dk.magenta.datafordeler.core.database.DataItem;
 import dk.magenta.datafordeler.core.exception.InvalidClientInputException;
 import dk.magenta.datafordeler.core.fapi.ParameterMap;
 import dk.magenta.datafordeler.core.fapi.QueryField;
+import dk.magenta.datafordeler.ger.data.GerEntity;
 import dk.magenta.datafordeler.ger.data.GerQuery;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,9 +46,20 @@ public class CompanyQuery extends GerQuery<CompanyEntity> {
 
     @Override
     public BaseLookupDefinition getLookupDefinition() {
-        BaseLookupDefinition lookupDefinition = super.getLookupDefinition();
+        BaseLookupDefinition lookupDefinition = new BaseLookupDefinition(this);
+        if (this.recordAfter != null) {
+            lookupDefinition.put(DataItem.DB_FIELD_LAST_UPDATED, this.recordAfter, OffsetDateTime.class, BaseLookupDefinition.Operator.GT);
+        }
+        if (this.getGerNr() != null) {
+            lookupDefinition.put(
+                    BaseLookupDefinition.entityref + BaseLookupDefinition.separator + CompanyEntity.DB_FIELD_GERNR,
+                    this.getGerNr(),
+                    Integer.class
+            );
+        }
+
         if (this.name != null && !this.name.isEmpty()) {
-            lookupDefinition.put(CompanyEntity.DB_FIELD_NAME + BaseLookupDefinition.separator + CompanyEntity.DB_FIELD_NAME, this.name, String.class);
+            lookupDefinition.put(CompanyEntity.DB_FIELD_NAME, this.name, String.class);
         }
         return lookupDefinition;
     }

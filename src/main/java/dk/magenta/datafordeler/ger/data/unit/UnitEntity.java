@@ -12,13 +12,19 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
 @Table(name = GerPlugin.DEBUG_TABLE_PREFIX + UnitEntity.TABLE_NAME, indexes = {
         @Index(
-                name = GerPlugin.DEBUG_TABLE_PREFIX + UnitEntity.TABLE_NAME + UnitEntity.DB_FIELD_CODE,
-                columnList = UnitEntity.DB_FIELD_CODE
+                name = GerPlugin.DEBUG_TABLE_PREFIX + UnitEntity.TABLE_NAME + UnitEntity.DB_FIELD_DNR,
+                columnList = UnitEntity.DB_FIELD_DNR
+        ),
+        @Index(
+                name = GerPlugin.DEBUG_TABLE_PREFIX + UnitEntity.TABLE_NAME + UnitEntity.DB_FIELD_DEID,
+                columnList = UnitEntity.DB_FIELD_DEID
         ),
 })
 public class UnitEntity extends GerEntity implements IdentifiedEntity {
@@ -33,12 +39,44 @@ public class UnitEntity extends GerEntity implements IdentifiedEntity {
     }
 
     public UnitEntity(RawData record) {
-        this.setGer(record.getInt("GERNR"));
+        this.setDnr(record.getInt("GERNR"));
     }
 
     public static UUID generateUUID(int gerNr) {
         String uuidInput = "company:"+gerNr;
         return UUID.nameUUIDFromBytes(uuidInput.getBytes());
+    }
+
+
+
+    public static final String DB_FIELD_DNR = "dnr";
+    public static final String IO_FIELD_DNR = "dnr";
+    @Column(name = DB_FIELD_DNR)
+    @JsonProperty(value = IO_FIELD_DNR)
+    private Integer dnr;
+
+    public Integer getDnr() {
+        return this.dnr;
+    }
+
+    public void setDnr(Integer dnr) {
+        this.dnr = dnr;
+    }
+
+
+
+    public static final String DB_FIELD_GERNR = "gerNumber";
+    public static final String IO_FIELD_GERNR = "gerNr";
+    @Column(name = DB_FIELD_GERNR)
+    @JsonProperty(value = IO_FIELD_GERNR)
+    private Integer gerNumber;
+
+    public Integer getGerNumber() {
+        return this.gerNumber;
+    }
+
+    public void setGerNumber(Integer gerNumber) {
+        this.gerNumber = gerNumber;
     }
 
 
@@ -103,22 +141,6 @@ public class UnitEntity extends GerEntity implements IdentifiedEntity {
 
     public void setDeid(UUID deid) {
         this.deid = deid;
-    }
-
-
-
-    public static final String DB_FIELD_DNR = "dnr";
-    public static final String IO_FIELD_DNR = "dnr";
-    @Column(name = DB_FIELD_DNR)
-    @JsonProperty(value = IO_FIELD_DNR)
-    private Integer dnr;
-
-    public Integer getDnr() {
-        return this.dnr;
-    }
-
-    public void setDnr(Integer dnr) {
-        this.dnr = dnr;
     }
 
 
@@ -635,6 +657,52 @@ public class UnitEntity extends GerEntity implements IdentifiedEntity {
 
     public void setLuliNumber(String luliNumber) {
         this.luliNumber = luliNumber;
+    }
+
+
+
+
+    public Map<String, Object> asMap() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(IO_FIELD_GERNR, this.getGerNumber());
+        map.put(IO_FIELD_DNR, this.getDnr());
+        map.put(IO_FIELD_JE_END_DATE, this.jeEndDate);
+        map.put(IO_FIELD_DEID, this.deid);
+        map.put(IO_FIELD_JEID, this.jeid);
+        map.put(IO_FIELD_VALIDATED, this.validated);
+        map.put(IO_FIELD_COPY, this.copy);
+        map.put(IO_FIELD_NAME, this.name);
+        map.put(IO_FIELD_DANISH_NAME, this.danishName);
+        map.put(IO_FIELD_SHORT_NAME, this.shortName);
+        map.put(IO_FIELD_SHORT_DANISH_NAME, this.shortDanishName);
+        map.put(IO_FIELD_CO_NAME, this.coName);
+        map.put(IO_FIELD_ADDRESS1, this.address1);
+        map.put(IO_FIELD_ADDRESS2, this.address2);
+        map.put(IO_FIELD_ADDRESS3, this.address3);
+        map.put(IO_FIELD_BNR, this.bnr);
+        map.put(IO_FIELD_BOXNR, this.boxNr);
+        map.put(IO_FIELD_POSTNR, this.postNr);
+        map.put(IO_FIELD_OLD_TAX, this.oldTaxKom);
+        map.put(IO_FIELD_MUNICIPALITY_CODE, this.municipalityCode);
+        map.put(IO_FIELD_LOCALITY_CODE, this.localityCode);
+        map.put(IO_FIELD_COUNTRY_CODE, this.countryCode);
+        map.put(IO_FIELD_PHONE, this.phone);
+        map.put(IO_FIELD_FAX, this.fax);
+        map.put(IO_FIELD_MOBILEPHONE, this.mobilePhone);
+        map.put(IO_FIELD_EMAIL, this.email);
+        map.put(IO_FIELD_OPERATION_FORM_CODE, this.operationFormCode);
+        map.put(IO_FIELD_OPERATION_FORM_TEXT, this.operationFormText);
+        map.put(IO_FIELD_BUSINESS_CODE, this.businessCode);
+        map.put(IO_FIELD_BUSINESS_TEXT, this.businessText);
+        map.put(IO_FIELD_START_DATE, this.startDate);
+        map.put(IO_FIELD_END_DATE, this.endDate);
+        map.put(IO_FIELD_ADVERTFREE, this.advertFree);
+        map.put(IO_FIELD_MEMO, this.memo);
+        map.put(IO_FIELD_FOUND_DATE, this.foundDate);
+        map.put(IO_FIELD_AJOUR_DATE, this.ajourDate);
+        map.put(IO_FIELD_AJOUR_INIT, this.ajourInit);
+        map.put(IO_FIELD_LULI, this.luliNumber);
+        return map;
     }
 
 }

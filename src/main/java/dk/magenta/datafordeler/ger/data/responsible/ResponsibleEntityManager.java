@@ -7,6 +7,7 @@ import dk.magenta.datafordeler.ger.data.RawData;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 @Component("GerParticipantEntityManager")
@@ -47,7 +48,8 @@ public class ResponsibleEntityManager extends GerEntityManager<ResponsibleEntity
 
     @Override
     protected UUID generateUUID(RawData rawData) {
-        return ResponsibleEntity.generateUUID(rawData.getInt("GERNR"));
+        return UUID.randomUUID(); // Spreadsheet does not have a field that uniquely identifies a row
+        //return ResponsibleEntity.generateUUID(rawData.getInt("GERNR"), rawData.getUUID("CVR_DELTAGER_GUID"));
     }
 
     @Override
@@ -64,14 +66,48 @@ public class ResponsibleEntityManager extends GerEntityManager<ResponsibleEntity
         entity.setRelationStartDate(rawData.getDate("RELATIONSSTART"));
         entity.setRelationEndDate(rawData.getDate("RELATIONSSLUT"));
         entity.setRelationCreateDate(rawData.getDate("RELATIONOPRETTET"));
-        entity.setRelationUpdateDate(rawData.getDate("RELATIONOPDATERET"));
+        entity.setRelationUpdateDate(rawData.getDate("RELATIONSOPDATERET"));
         entity.setCvrParticipantGuid(rawData.getUUID("CVR_DELTAGER_GUID"));
-        entity.setUnitNumber(rawData.getInt("ENHEDSNUMMER"));
+        entity.setUnitNumber(rawData.getLong("ENHEDSNUMMER"));
         entity.setUnitType(rawData.getString("ENHEDSTYPE"));
         entity.setName(rawData.getString("NAVN"));
-        entity.setCprNumber(rawData.getInt("CPRNUMMER"));
+        entity.setCprNumber(rawData.getLong("CPRNUMMER"));
         entity.setCvrNumber(rawData.getInt("CVRNUMMER"));
         entity.setLastUpdated(rawData.getDate("SIDSTOPDATERET"));
+    }
+
+    private static final HashMap<String, String> keyMappingEntityToRaw = new HashMap<>();
+    private static final HashMap<String, String> keyMappingRawToEntity = new HashMap<>();
+    static {
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_GERNR, "GERNR");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_OPERATION_FORM_CODE, "DRIFTFORMKODE");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_OPERATION_FORM_TEXT, "DRIFTFORMTEKST");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_JE_END_DATE, "JE_SLUTDTO");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_MEMO, "RELATIONSNOTAT");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_RELATION_START_DATE, "RELATIONSSTART");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_RELATION_END_DATE, "RELATIONSSLUT");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_RELATION_CREATE_DATE, "RELATIONOPRETTET");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_RELATION_UPDATE_DATE, "RELATIONSOPDATERET");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_NAME, "NAVN");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_CVR_PARTICIPANT_GUID, "CVR_DELTAGER_GUID");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_UNIT_NUMBER, "ENHEDSNUMMER");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_UNIT_TYPE, "ENHEDSTYPE");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_NAME, "NAVN");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_CPR, "CPRNUMMER");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_CVR, "CVRNUMMER");
+        keyMappingEntityToRaw.put(ResponsibleEntity.IO_FIELD_LAST_UPDATED, "SIDSTOPDATERET");
+
+        for (String key : keyMappingEntityToRaw.keySet()) {
+            keyMappingRawToEntity.put(keyMappingEntityToRaw.get(key), key);
+        }
+    }
+
+    public static HashMap<String, String> getKeyMappingEntityToRaw() {
+        return keyMappingEntityToRaw;
+    }
+
+    public static HashMap<String, String> getKeyMappingRawToEntity() {
+        return keyMappingRawToEntity;
     }
 
 }

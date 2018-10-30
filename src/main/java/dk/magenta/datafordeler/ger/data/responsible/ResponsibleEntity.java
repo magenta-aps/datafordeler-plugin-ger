@@ -12,13 +12,15 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
 @Table(name = GerPlugin.DEBUG_TABLE_PREFIX + ResponsibleEntity.TABLE_NAME, indexes = {
         @Index(
-                name = GerPlugin.DEBUG_TABLE_PREFIX + ResponsibleEntity.TABLE_NAME + ResponsibleEntity.DB_FIELD_CODE,
-                columnList = ResponsibleEntity.DB_FIELD_CODE
+                name = GerPlugin.DEBUG_TABLE_PREFIX + ResponsibleEntity.TABLE_NAME + ResponsibleEntity.DB_FIELD_GERNR,
+                columnList = ResponsibleEntity.DB_FIELD_GERNR
         ),
 })
 public class ResponsibleEntity extends GerEntity implements IdentifiedEntity {
@@ -33,15 +35,29 @@ public class ResponsibleEntity extends GerEntity implements IdentifiedEntity {
     }
 
     public ResponsibleEntity(RawData record) {
-        this.setGer(record.getInt("GERNR"));
+        this.setGerNumber(record.getInt("GERNR"));
     }
 
-    public static UUID generateUUID(int gerNr) {
-        String uuidInput = "responsible:"+gerNr;
+    public static UUID generateUUID(int gerNr, UUID cvrParticipantGuid) {
+        String uuidInput = "responsible:"+gerNr+"|"+cvrParticipantGuid.toString();
         return UUID.nameUUIDFromBytes(uuidInput.getBytes());
     }
 
 
+
+    public static final String DB_FIELD_GERNR = "gerNumber";
+    public static final String IO_FIELD_GERNR = "gerNr";
+    @Column(name = DB_FIELD_GERNR)
+    @JsonProperty(value = IO_FIELD_GERNR)
+    private Integer gerNumber;
+
+    public Integer getGerNumber() {
+        return this.gerNumber;
+    }
+
+    public void setGerNumber(Integer gerNumber) {
+        this.gerNumber = gerNumber;
+    }
 
 
 
@@ -195,13 +211,13 @@ public class ResponsibleEntity extends GerEntity implements IdentifiedEntity {
     public static final String IO_FIELD_UNIT_NUMBER = "enhedsNummer";
     @Column(name = DB_FIELD_UNIT_NUMBER)
     @JsonProperty(value = IO_FIELD_UNIT_NUMBER)
-    private Integer unitNumber;
+    private Long unitNumber;
 
-    public Integer getUnitNumber() {
+    public Long getUnitNumber() {
         return this.unitNumber;
     }
 
-    public void setUnitNumber(Integer unitNumber) {
+    public void setUnitNumber(Long unitNumber) {
         this.unitNumber = unitNumber;
     }
 
@@ -243,13 +259,13 @@ public class ResponsibleEntity extends GerEntity implements IdentifiedEntity {
     public static final String IO_FIELD_CPR = "cprNumber";
     @Column(name = DB_FIELD_CPR)
     @JsonProperty(value = IO_FIELD_CPR)
-    private Integer cprNumber;
+    private Long cprNumber;
 
-    public Integer getCprNumber() {
+    public Long getCprNumber() {
         return this.cprNumber;
     }
 
-    public void setCprNumber(Integer cprNumber) {
+    public void setCprNumber(Long cprNumber) {
         this.cprNumber = cprNumber;
     }
 
@@ -283,6 +299,28 @@ public class ResponsibleEntity extends GerEntity implements IdentifiedEntity {
 
     public void setLastUpdated(LocalDate lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+
+    public Map<String, Object> asMap() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(IO_FIELD_GERNR, this.getGerNumber());
+        map.put(IO_FIELD_OPERATION_FORM_CODE, this.operationFormCode);
+        map.put(IO_FIELD_OPERATION_FORM_TEXT, this.operationFormText);
+        map.put(IO_FIELD_JE_END_DATE, this.jeEndDate);
+        map.put(IO_FIELD_MEMO, this.relationMemo);
+        map.put(IO_FIELD_RELATION_START_DATE, this.relationStartDate);
+        map.put(IO_FIELD_RELATION_END_DATE, this.relationEndDate);
+        map.put(IO_FIELD_RELATION_CREATE_DATE, this.relationCreateDate);
+        map.put(IO_FIELD_RELATION_UPDATE_DATE, this.relationUpdateDate);
+        map.put(IO_FIELD_CVR_PARTICIPANT_GUID, this.cvrParticipantGuid);
+        map.put(IO_FIELD_UNIT_NUMBER, this.unitNumber);
+        map.put(IO_FIELD_UNIT_TYPE, this.unitType);
+        map.put(IO_FIELD_NAME, this.name);
+        map.put(IO_FIELD_CPR, this.cprNumber);
+        map.put(IO_FIELD_CVR, this.cvrNumber);
+        map.put(IO_FIELD_LAST_UPDATED, this.lastUpdated);
+        return map;
     }
 
 }

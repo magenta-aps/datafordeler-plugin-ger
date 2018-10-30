@@ -9,10 +9,7 @@ import dk.magenta.datafordeler.core.fapi.ParameterMap;
 import dk.magenta.datafordeler.core.fapi.QueryField;
 
 import java.time.OffsetDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by lars on 19-05-17.
@@ -22,7 +19,7 @@ public abstract class GerQuery<E extends GerEntity> extends BaseQuery {
     public static final String GERNR = "gernr";
 
     @QueryField(type = QueryField.FieldType.STRING, queryName = GERNR)
-    private List<String> gerNr;
+    private List<String> gerNr = new ArrayList<>();
 
     public List<String> getGerNr() {
         return gerNr;
@@ -31,6 +28,10 @@ public abstract class GerQuery<E extends GerEntity> extends BaseQuery {
     public void setGerNr(String gerNr) {
         this.gerNr.clear();
         this.addGerNr(gerNr);
+    }
+
+    public void setGerNr(int gerNr) {
+        this.setGerNr(Integer.toString(gerNr));
     }
 
     public void addGerNr(String gerNr) {
@@ -52,21 +53,6 @@ public abstract class GerQuery<E extends GerEntity> extends BaseQuery {
         BaseLookupDefinition lookupDefinition = new BaseLookupDefinition(this);
         if (this.recordAfter != null) {
             lookupDefinition.put(DataItem.DB_FIELD_LAST_UPDATED, this.recordAfter, OffsetDateTime.class, BaseLookupDefinition.Operator.GT);
-        }
-        /*if (this.uuid != null && !this.uuid.isEmpty()) {
-            lookupDefinition.put(
-                    BaseLookupDefinition.entityref + BaseLookupDefinition.separator + GerEntity.DB_FIELD_IDENTIFICATION + BaseLookupDefinition.separator + Identification.DB_FIELD_UUID,
-                    this.uuid,
-                    UUID.class,
-                    BaseLookupDefinition.Operator.EQ
-            );
-        }*/
-        if (this.gerNr != null) {
-            lookupDefinition.put(
-                    BaseLookupDefinition.entityref + BaseLookupDefinition.separator + GerEntity.DB_FIELD_CODE,
-                    this.gerNr,
-                    String.class
-            );
         }
         return lookupDefinition;
     }

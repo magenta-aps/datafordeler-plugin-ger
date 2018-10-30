@@ -12,13 +12,15 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
 @Table(name = GerPlugin.DEBUG_TABLE_PREFIX + CompanyEntity.TABLE_NAME, indexes = {
         @Index(
-                name = GerPlugin.DEBUG_TABLE_PREFIX + CompanyEntity.TABLE_NAME + CompanyEntity.DB_FIELD_CODE,
-                columnList = CompanyEntity.DB_FIELD_CODE
+                name = GerPlugin.DEBUG_TABLE_PREFIX + CompanyEntity.TABLE_NAME + CompanyEntity.DB_FIELD_GERNR,
+                columnList = CompanyEntity.DB_FIELD_GERNR
         ),
 })
 public class CompanyEntity extends GerEntity implements IdentifiedEntity {
@@ -33,13 +35,31 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
     }
 
     public CompanyEntity(RawData record) {
-        this.setGer(record.getInt("GERNR"));
+        this.setGerNr(record.getInt("GERNR"));
     }
 
     public static UUID generateUUID(int gerNr) {
         String uuidInput = "company:"+gerNr;
         return UUID.nameUUIDFromBytes(uuidInput.getBytes());
     }
+
+
+
+    public static final String DB_FIELD_GERNR = "gerNr";
+    public static final String IO_FIELD_GERNR = "gerNr";
+    @Column(name = DB_FIELD_GERNR)
+    @JsonProperty(value = DB_FIELD_GERNR)
+    private int gerNr;
+
+    public int getGerNr() {
+        return this.gerNr;
+    }
+
+    public void setGerNr(int gerNr) {
+        this.gerNr = gerNr;
+    }
+
+
 
     public static final String DB_FIELD_VALIDATED = "validated";
     public static final String IO_FIELD_VALIDATED = "valideret";
@@ -73,7 +93,7 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
     public static final String DB_FIELD_DANISH_NAME = "danishName";
     public static final String IO_FIELD_DANISH_NAME = "danskNavn";
     @Column(name = DB_FIELD_DANISH_NAME)
-    @JsonProperty(value = IO_FIELD_NAME)
+    @JsonProperty(value = IO_FIELD_DANISH_NAME)
     private String danishName;
 
     public String getDanishName() {
@@ -618,5 +638,55 @@ public class CompanyEntity extends GerEntity implements IdentifiedEntity {
 
     public void setRoadCode(Integer roadCode) {
         this.roadCode = roadCode;
+    }
+
+
+    public Map<String, Object> asMap() {
+        HashMap<String, Object> map = new HashMap<>();
+
+        map.put(IO_FIELD_GERNR, this.gerNr);
+        map.put(IO_FIELD_VALIDATED, this.validated);
+        map.put(IO_FIELD_NAME, this.name);
+        map.put(IO_FIELD_DANISH_NAME, this.danishName);
+        map.put(IO_FIELD_SHORT_NAME, this.shortName);
+        map.put(IO_FIELD_SHORT_DANISH_NAME, this.shortDanishName);
+        map.put(IO_FIELD_CO_NAME, this.coName);
+        map.put(IO_FIELD_ADDRESS1, this.address1);
+        map.put(IO_FIELD_ADDRESS2, this.address2);
+        map.put(IO_FIELD_ADDRESS3, this.address3);
+        map.put(IO_FIELD_BNR, this.bnr);
+        map.put(IO_FIELD_BOXNR, this.boxNr);
+        map.put(IO_FIELD_POSTNR, this.postNr);
+        map.put(IO_FIELD_OLD_TAX, this.oldTaxKom);
+        map.put(IO_FIELD_MUNICIPALITY_CODE, this.municipalityCode);
+        map.put(IO_FIELD_LOCALITY_CODE, this.localityCode);
+        map.put(IO_FIELD_COUNTRY_CODE, this.countryCode);
+        map.put(IO_FIELD_PHONE, this.phone);
+        map.put(IO_FIELD_FAX, this.fax);
+        map.put(IO_FIELD_MOBILEPHONE, this.mobilePhone);
+        map.put(IO_FIELD_EMAIL, this.email);
+        map.put(IO_FIELD_OPERATION_FORM_CODE, this.operationFormCode);
+        map.put(IO_FIELD_OPERATION_FORM_TEXT, this.operationFormText);
+        map.put(IO_FIELD_BUSINESS_CODE, this.businessCode);
+        map.put(IO_FIELD_BUSINESS_TEXT, this.businessText);
+        map.put(IO_FIELD_START_DATE, this.startDate);
+        map.put(IO_FIELD_END_DATE, this.endDate);
+        map.put(IO_FIELD_LNR, this.lnr);
+        map.put(IO_FIELD_MEMO, this.memo);
+        map.put(IO_FIELD_FOUND_DATE, this.foundDate);
+        map.put(IO_FIELD_AJOUR_DATE, this.ajourDate);
+        map.put(IO_FIELD_AJOUR_INIT, this.ajourInit);
+        map.put(IO_FIELD_STATUS_GUID, this.statusGuid);
+        map.put(IO_FIELD_STATUS_CHANGE, this.statusChange);
+        map.put(IO_FIELD_STATUS_INIT, this.statusInit);
+        map.put(IO_FIELD_DOOR, this.door);
+        map.put(IO_FIELD_FLOOR, this.floor);
+        map.put(IO_FIELD_LETTER_FROM, this.letterFrom);
+        map.put(IO_FIELD_LETTER_TO, this.letterTo);
+        map.put(IO_FIELD_HOUSENUMBER_FROM, this.houseNumberFrom);
+        map.put(IO_FIELD_HOUSENUMBER_TO, this.houseNumberTo);
+        map.put(IO_FIELD_ROAD_CODE, this.roadCode);
+
+        return map;
     }
 }
