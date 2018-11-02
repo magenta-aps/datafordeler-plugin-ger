@@ -269,6 +269,11 @@ public class ResponsibleEntity extends GerEntity implements IdentifiedEntity {
         this.cprNumber = cprNumber;
     }
 
+    public String getCprNumberString() {
+        return this.cprNumber != null ? String.format("%010d", this.cprNumber) : null;
+    }
+
+
 
 
     public static final String DB_FIELD_CVR = "cvrNumber";
