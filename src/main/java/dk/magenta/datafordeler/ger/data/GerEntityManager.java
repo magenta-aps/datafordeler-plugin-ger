@@ -202,7 +202,7 @@ public abstract class GerEntityManager<E extends GerEntity> extends EntityManage
 
         String sheetName = this.getSheetName();
         List<RawData> sheet = sheets.get(sheetName);
-        
+
         for (RawData rawData : sheet) {
             if (!rawData.isEmpty()) {
                 timer.start(TASK_PARSE);

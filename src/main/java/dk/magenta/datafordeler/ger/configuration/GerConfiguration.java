@@ -47,6 +47,11 @@ public class GerConfiguration implements Configuration {
     public RegisterType getCompanyRegisterType() {
         return this.companyRegisterType;
     }
+
+    public void setCompanyRegisterType(RegisterType companyRegisterType) {
+        this.companyRegisterType = companyRegisterType;
+    }
+
 /*
     @Column(length = 64)
     private String companySheetName = "JE";
@@ -64,6 +69,10 @@ public class GerConfiguration implements Configuration {
     }
 
 
+    public void setCompanyRegisterURL(String companyRegisterURL) {
+        this.companyRegisterURL = companyRegisterURL;
+    }
+
 
     @Column
     @Enumerated(EnumType.ORDINAL)
@@ -71,6 +80,11 @@ public class GerConfiguration implements Configuration {
 
     public RegisterType getUnitRegisterType() {
         return this.unitRegisterType;
+    }
+
+
+    public void setUnitRegisterType(RegisterType unitRegisterType) {
+        this.unitRegisterType = unitRegisterType;
     }
 /*
     @Column(length = 64)
@@ -89,6 +103,10 @@ public class GerConfiguration implements Configuration {
     }
 
 
+    public void setUnitRegisterURL(String unitRegisterURL) {
+        this.unitRegisterURL = unitRegisterURL;
+    }
+
 
     @Column
     @Enumerated(EnumType.ORDINAL)
@@ -97,6 +115,11 @@ public class GerConfiguration implements Configuration {
     public RegisterType getResponsibleRegisterType() {
         return this.responsibleRegisterType;
     }
+
+    public void setResponsibleRegisterType(RegisterType responsibleRegisterType) {
+        this.responsibleRegisterType = responsibleRegisterType;
+    }
+
 /*
     @Column(length = 64)
     private String responsibleSheetName = "";
@@ -110,6 +133,10 @@ public class GerConfiguration implements Configuration {
 
     public String getResponsibleRegisterURL() {
         return this.responsibleRegisterURL;
+    }
+
+    public void setResponsibleRegisterURL(String responsibleRegisterURL) {
+        this.responsibleRegisterURL = responsibleRegisterURL;
     }
 
 
