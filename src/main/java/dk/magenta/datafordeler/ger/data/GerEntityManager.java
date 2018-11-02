@@ -202,26 +202,24 @@ public abstract class GerEntityManager<E extends GerEntity> extends EntityManage
 
         String sheetName = this.getSheetName();
         List<RawData> sheet = sheets.get(sheetName);
-
-        int row = 1;
+        
         for (RawData rawData : sheet) {
-            row++;
-            //System.out.println("row "+row);
+            if (!rawData.isEmpty()) {
+                timer.start(TASK_PARSE);
+                timer.measure(TASK_PARSE);
 
-            timer.start(TASK_PARSE);
-            timer.measure(TASK_PARSE);
+                timer.start(TASK_FIND_ENTITY);
+                E entity = this.getEntity(entityCache, session, rawData);
+                timer.measure(TASK_FIND_ENTITY);
 
-            timer.start(TASK_FIND_ENTITY);
-            E entity = this.getEntity(entityCache, session, rawData);
-            timer.measure(TASK_FIND_ENTITY);
+                timer.start(TASK_POPULATE_DATA);
+                this.updateEntity(entity, rawData, importMetadata);
+                timer.measure(TASK_POPULATE_DATA);
 
-            timer.start(TASK_POPULATE_DATA);
-            this.updateEntity(entity, rawData, importMetadata);
-            timer.measure(TASK_POPULATE_DATA);
-
-            timer.start(TASK_SAVE);
-            session.save(entity);
-            timer.measure(TASK_SAVE);
+                timer.start(TASK_SAVE);
+                session.save(entity);
+                timer.measure(TASK_SAVE);
+            }
         }
 
         if (!wrappedInTransaction) {

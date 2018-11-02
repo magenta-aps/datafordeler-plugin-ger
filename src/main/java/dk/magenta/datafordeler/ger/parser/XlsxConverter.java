@@ -54,11 +54,13 @@ public class XlsxConverter extends XlsConverter {
                 XSSFRow row = sheet.getRow(rowIndex);
                 if (row != null) {
                     List<Object> values = getRow(row);
-                    for (int cellIndex = 0; cellIndex < values.size(); cellIndex++) {
-                        rowConversion.put(columnNames.get(cellIndex), values.get(cellIndex));
+                    if (!values.isEmpty()) {
+                        for (int cellIndex = 0; cellIndex < values.size(); cellIndex++) {
+                            rowConversion.put(columnNames.get(cellIndex), values.get(cellIndex));
+                        }
+                        sheetConversion.add(rowConversion);
                     }
                 }
-                sheetConversion.add(rowConversion);
             }
             documentConversion.put(sheetName, sheetConversion);
         }
