@@ -1,7 +1,8 @@
 package dk.magenta.datafordeler.ger.parser;
 
 import dk.magenta.datafordeler.ger.data.RawData;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.jopendocument.dom.ODValueType;
 import org.jopendocument.dom.spreadsheet.*;
@@ -15,7 +16,7 @@ import java.util.*;
  */
 public class OdfConverter extends SpreadsheetConverter {
 
-    private static Logger log = Logger.getLogger(SpreadsheetConverter.class);
+    private static Logger log = LogManager.getLogger(SpreadsheetConverter.class);
 
     protected String[] getApplicableContentTypes() {
         return new String[]{

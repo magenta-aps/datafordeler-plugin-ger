@@ -1,12 +1,16 @@
 package dk.magenta.datafordeler.ger.parser;
 
 import dk.magenta.datafordeler.ger.data.RawData;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lars on 26-11-15.
@@ -15,7 +19,7 @@ public abstract class SpreadsheetConverter {
 
     protected static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private static Logger log = Logger.getLogger(SpreadsheetConverter.class);
+    private static Logger log = LogManager.getLogger(SpreadsheetConverter.class);
 
     protected String[] getApplicableContentTypes() {
         return new String[0];
