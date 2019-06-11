@@ -5,6 +5,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
@@ -81,10 +82,10 @@ public class XlsConverter extends SpreadsheetConverter {
 
     protected static Object getCellValue(Cell cell) {
         if (cell != null) {
-            int cellType = cell.getCellType();
-            if (cellType == Cell.CELL_TYPE_STRING) {
+            CellType cellType = cell.getCellType();
+            if (cellType == CellType.STRING) {
                 return cell.getStringCellValue();
-            } else if (cellType == Cell.CELL_TYPE_NUMERIC) {
+            } else if (cellType == CellType.NUMERIC) {
                 if (DateUtil.isCellDateFormatted(cell)) {
                     return DateUtil.getJavaDate(cell.getNumericCellValue());
                 } else {
@@ -95,7 +96,7 @@ public class XlsConverter extends SpreadsheetConverter {
                         return value;
                     }
                 }
-            } else if (cellType == Cell.CELL_TYPE_BOOLEAN) {
+            } else if (cellType == CellType.BOOLEAN) {
                 return cell.getBooleanCellValue();
             }
         }
