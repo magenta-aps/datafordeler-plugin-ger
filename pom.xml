@@ -6,7 +6,7 @@
 
     <groupId>dk.magenta.datafordeler</groupId>
     <artifactId>datafordeler-plugin-ger</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
     <name>datafordeler-plugin-ger</name>
     <description>Company (GER) plugin for Magenta&#39;s Greenlandic System
@@ -16,9 +16,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8
         </project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <spring.version>4.3.6.RELEASE</spring.version>
-        <spring.boot.version>1.5.1.RELEASE</spring.boot.version>
+        <java.version>11</java.version>
+        <spring.version>5.1.7.RELEASE</spring.version>
+        <spring.boot.version>2.1.5.RELEASE</spring.boot.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
 
@@ -28,7 +30,7 @@
         <dependency>
             <groupId>dk.magenta.datafordeler</groupId>
             <artifactId>datafordeler-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.1</version>
             <scope>compile</scope>
         </dependency>
 
@@ -54,25 +56,37 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>3.14</version>
+            <version>4.1.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>3.14</version>
+            <version>4.1.0</version>
         </dependency>
 
         <!-- For converting odf spreadsheets -->
         <dependency>
             <groupId>org.apache.odftoolkit</groupId>
             <artifactId>odfdom-java</artifactId>
-            <version>0.8.10-incubating</version>
+            <version>0.8.11-incubating</version>
+            <exclusions><!--EXCLUTION SEEMS NEEDED HERE-->
+                <exclusion>
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.odftoolkit</groupId>
             <artifactId>simple-odf</artifactId>
-            <version>0.8.1-incubating</version>
+            <version>0.8.2-incubating</version>
+            <exclusions><!--EXCLUTION SEEMS NEEDED HERE-->
+                <exclusion>
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jopendocument</groupId>
@@ -88,7 +102,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -100,7 +114,7 @@
                 <configuration>
                     <outputDirectory>../jar</outputDirectory>
                 </configuration>
-                <version>2.6</version>
+                <version>3.1.2</version>
             </plugin>
         </plugins>
     </build>
